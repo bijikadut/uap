@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inputan user</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Penjualan Barang</h2>
+      <div class="form-group">
+        <label for="itemCode">Masukan Kode</label>
+        <input type="text" id="itemCode" />
+      </div>
+      <div class="form-group">
+        <label for="itemQuantity">Banyaknya Barang</label>
+        <input type="number" id="itemQuantity" />
+      </div>
+      <div class="form-group">
+        <button onclick="processSale()">Submit</button>
+      </div>
+    </div>
+
+    <script>
+      const items = {
+        B001: { name: "Barang A", price: 10000 },
+        B002: { name: "Barang B", price: 20000 },
+        B003: { name: "Barang C", price: 30000 },
+      };
+
+      function processSale() {
+        const itemCode = document.getElementById("itemCode").value;
+        const itemQuantity = parseInt(
+          document.getElementById("itemQuantity").value
+        );
+        const item = items[itemCode];
+
+        if (!item) {
+          alert("Kode barang tidak valid. Silakan masukkan kode yang benar.");
+          return;
+        }
+
+        if (isNaN(itemQuantity) || itemQuantity <= 0) {
+          alert("Silakan masukkan jumlah barang yang valid.");
+          return;
+        }
+
+        const totalPrice = item.price * itemQuantity;
+        alert(
+          `Total harga untuk ${itemQuantity} ${item.name} adalah Rp${totalPrice}.`
+        );
+
+        const payment = parseFloat(prompt(`Masukkan jumlah pembayaran:`));
+
+        if (isNaN(payment) || payment <= 0) {
+          alert("Silakan masukkan jumlah pembayaran yang valid.");
+          return;
+        }
+
+        if (payment >= totalPrice) {
+          const change = payment - totalPrice;
+          alert(`Pembayaran berhasil. Kembalian Anda adalah Rp${change}.`);
+        } else {
+          alert("Pembayaran tidak cukup.");
+        }
+      }
+    </script>
+  </body>
+</html>
